@@ -3,13 +3,13 @@
 const toCase = require('case');
 const fs = require('fs');
 const inquirer = require('inquirer');
-const path = require('path');
+const minimist = require('minimist');
 const mkdirp = require('mkdirp');
+const path = require('path');
 
 const EXIT_CODES = {
     OK: 0,
     NOT_IN_ROOT_FOLDER: 1,
-    INCORRECT_FOLDER_STRUCTURE: 2,
     COMPONENT_NAME_MISSING: 3,
     ALREADY_EXISTS: 4,
 };
@@ -22,7 +22,6 @@ export default ${name};
 
 const app = async () => {
     const isInRootFolder = fs.existsSync(path.resolve(CURRENT_DIR, 'package.json'));
-    const hasCorrectFolderStructure = fs.existsSync(path.resolve(CURRENT_DIR, 'src', 'components'));
 
     if (!isInRootFolder) {
         console.error(
@@ -31,16 +30,9 @@ const app = async () => {
         );
         process.exit(EXIT_CODES.NOT_IN_ROOT_FOLDER);
     }
-    if (!hasCorrectFolderStructure) {
-        console.error(
-            '💩  Looks like you don\'t have a src/components folder. This tool is set up to follow this ' +
-            'structure. If you came across this script and need it to work for you, please submit ' +
-            'an issue or a pull request at https://www.github.com/selbekk/bootstrap-component.'
-        );
-        process.exit(EXIT_CODES.INCORRECT_FOLDER_STRUCTURE);
-    }
+    const args = minimist(process.argv.slice(2));
 
-    let componentName = process.argv[2];
+    let componentName = args._[0];
     if (!componentName) {
         const result = await inquirer.prompt([{
             message: 'What do you want to name your component?',
@@ -56,7 +48,17 @@ const app = async () => {
         exit(EXIT_CODES.COMPONENT_NAME_MISSING);
     }
 
-    const componentFolder = path.resolve(CURRENT_DIR, 'src', 'components', toCase.kebab(componentName));
+    let componentPath = args.path;
+    if (!componentPath) {
+        const result = await inquirer.prompt([{
+            message: 'Where do you want to place your new component?',
+            name: 'path',
+            default: 'src/components',
+        }])
+        componentPath = result.path;
+    }
+
+    const componentFolder = path.resolve(CURRENT_DIR, componentPath, toCase.kebab(componentName));
     if (fs.existsSync(componentFolder)) {
         console.error(
             `💩  There is already a component folder with the name '${toCase.pascal(componentName)}'. ` +
