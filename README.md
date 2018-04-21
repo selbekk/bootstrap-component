@@ -39,8 +39,9 @@ this script uses `case` in order to figure it out :)
 You can specify the path too with the `--path=some/path/to/components`, if you need to create a similar
 structure somewhere else in your code base. The default is `src/components`.
 
-```
+```bash
 $ comp my-component --path=src/components
+```
 
 This will bootstrap a new component, complete with index.js file and ready to be coded.
 
