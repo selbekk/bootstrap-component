@@ -17,6 +17,7 @@ const EXIT_CODES = {
 const CURRENT_DIR = process.cwd();
 
 const getIndexTemplate = name => `import ${name} from './${name}';
+
 export default ${name};
 `;
 
@@ -25,14 +26,15 @@ const app = async () => {
 
     if (!isInRootFolder) {
         console.error(
-            '💩  Looks like you\'re not in the root folder, since there isn\'t a package.json there. ' +
-            'Please navigate to your root folder and try again'
+            '💩  Looks like you\'re not in the root folder, since there ' +
+            'isn\'t a package.json there. Please navigate to your root ' + 
+            'folder and try again'
         );
         process.exit(EXIT_CODES.NOT_IN_ROOT_FOLDER);
     }
     const args = minimist(process.argv.slice(2));
 
-    let componentName = args._[0];
+    let [componentName] = args._;
     if (!componentName) {
         const result = await inquirer.prompt([{
             message: 'What do you want to name your component?',

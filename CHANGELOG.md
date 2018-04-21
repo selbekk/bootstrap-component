@@ -1,9 +1,15 @@
-# 1.1.0
+# Changelog
+
+## 1.1.1
+
+Add an extra space between the import and the export in the index file
+
+## 1.1.0
 
 Added `--path` flag for specifying path to your components. This is great if you need the same structure
 somewhere else in your code base, like `src/containers` or wherever.
 
-# 1.0.0
+## 1.0.0
 
 Initial release! 🎉
 
