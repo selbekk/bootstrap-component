@@ -1,4 +1,8 @@
+[![npm version](https://badge.fury.io/js/bootstrap-component.svg)](https://badge.fury.io/js/bootstrap-component)
+
 # Bootstrap a new React component!
+
+## Why
 
 I tend to write my React components like this:
 
@@ -19,7 +23,7 @@ import ComponentName from './components/component-name';
 
 If you do the same, then you'll love this script!
 
-## Usage
+## How
 
 You can (and should) install this tool globally:
 
