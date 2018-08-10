@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+Add component templates. An interactive question, as well as a new argument `--type`.
+
 ## 1.1.1
 
 Add an extra space between the import and the export in the index file
